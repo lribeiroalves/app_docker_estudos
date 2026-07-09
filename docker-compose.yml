@@ -1,6 +1,11 @@
 services:
   web:
     build: .
+    volumes:
+      - ./app:/app
     container_name: flask_app
+    command: python -m flask run --host=0.0.0.0 --debug
+    env_file:
+      - .env
     expose:
       - "5000"
