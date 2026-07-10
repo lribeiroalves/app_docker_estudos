@@ -1,7 +1,9 @@
 # Makefile para gerenciar migrations do Flask
 
-# Serviço do docker-compose (ajuste se usar web-prod)
 SERVICE=web
+DB_SERVICE=mysql
+DB_USER=ribeiro
+DB_NAME=db
 
 # Cria a pasta migrations (apenas na primeira vez)
 init:
@@ -34,3 +36,7 @@ prod-up:
 	docker compose --profile prod up
 prod-down:
 	docker compose --profile prod down
+
+# Abre cliente MySQL direto no contêiner do banco
+db-shell:
+	docker compose exec $(DB_SERVICE) mysql -u $(DB_USER) -p$(DB_USER) $(DB_NAME)
