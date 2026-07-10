@@ -1,0 +1,15 @@
+[default]
+TITLE = 'APP - DOCKER'
+EXTENSIONS = [
+    'app.blueprints.webui:init_app'
+]
+
+[development]
+DEBUG = true
+
+[production]
+DEBUG = false
+
+# secrets.toml
+# SECRET_KEY =
+# SQLALCHEMY_DATABASE_URI =

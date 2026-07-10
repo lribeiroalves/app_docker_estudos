@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from .ext import configuration
 import os
 
 
@@ -6,6 +7,7 @@ def create_app():
     template_dir = os.path.abspath('app/blueprints/_templates')
     static_dir = os.path.abspath('app/blueprints/_static')
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+    configuration.init_app(app)
 
     @app.errorhandler(400)
     def bad_request(error):
@@ -15,9 +17,5 @@ def create_app():
         })
         response.status_code = 400
         return response
-    
-    @app.route('/')
-    def hello_world():
-        return 'Hello, World!'
     
     return app
