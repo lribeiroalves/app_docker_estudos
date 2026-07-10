@@ -41,6 +41,8 @@ markupsafe==3.0.3
     #   werkzeug
 packaging==26.2
     # via gunicorn
+pymysql==1.2.0
+    # via -r requirements.in
 sqlalchemy==2.0.51
     # via
     #   alembic

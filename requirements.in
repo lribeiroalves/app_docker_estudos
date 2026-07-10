@@ -3,3 +3,4 @@ gunicorn
 dynaconf
 flask-sqlalchemy
 flask-migrate
+pymysql

@@ -15,7 +15,6 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      - SQLALCHEMY_DATABASE_URI=sqlite:///dev.db
 
   web-prod:
     build: .
