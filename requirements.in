@@ -1,3 +1,5 @@
 flask
 gunicorn
 dynaconf
+flask-sqlalchemy
+flask-migrate
