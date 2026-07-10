@@ -22,3 +22,15 @@ downgrade:
 # Atalho para abrir shell dentro do contêiner
 shell:
 	docker compose exec $(SERVICE) bash
+
+# Atalho para compose --profile dev
+dev-up:
+	docker compose --profile dev up
+dev-down:
+	docker compose --profile dev down
+
+# Atalho para compose --profile prod
+prod-up:
+	docker compose --profile prod up
+prod-down:
+	docker compose --profile prod down
