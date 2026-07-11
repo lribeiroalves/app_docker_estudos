@@ -8,8 +8,6 @@ services:
       - .env.dev
     ports:
       - "5001:5000"
-
-    # Perfil de desenvolvimento
     profiles: ["dev"]
     command: python wsgi.py
     depends_on:
