@@ -219,3 +219,7 @@ __marimo__/
 
 **/secrets.toml
 secrets.toml
+**/.env.dev
+.env.dev
+**/.env.prod
+.env.prod

@@ -1,22 +1,30 @@
 services:
-  web:
+  web-dev:
     build: .
-    container_name: flask_app
+    container_name: flask_app_dev
     volumes:
       - .:/app
     env_file:
-      - .env
+      - .env.dev
     ports:
-      - "${FLASK_RUN_PORT}:${FLASK_RUN_PORT}"
+      - "5001:5000"
 
     # Perfil de desenvolvimento
     profiles: ["dev"]
     command: python wsgi.py
-    environment:
-      - FLASK_ENV=development
-      - FLASK_DEBUG=1
     depends_on:
-      - mysql
+      - mysql-dev
+
+  mysql-dev:
+    image: mysql:8.0
+    container_name: mysql_db_dev
+    env_file:
+      - .env.dev
+    volumes:
+      - db_data-dev:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    profiles: ["dev"]
 
   web-prod:
     build: .
@@ -24,28 +32,24 @@ services:
     volumes:
       - .:/app
     env_file:
-      - .env
+      - .env.prod
     ports:
-      - "${FLASK_RUN_PORT}:${FLASK_RUN_PORT}"
-
-    # Perfil de produção
+      - "5002:5000"
     profiles: ["prod"]
-    command: gunicorn -w 4 -b ${FLASK_RUN_HOST}:${FLASK_RUN_PORT} wsgi:app
-    environment:
-      - FLASK_ENV=production
-      - FLASK_DEBUG=0
     depends_on:
-      - mysql
+      - mysql-prod
   
-  mysql:
+  mysql-prod:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql_db_prod
     env_file:
-      - .env
+      - .env.prod
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data-prod:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3308:3306"
+    profiles: ["prod"]
   
 volumes:
-  db_data:
+  db_data-dev:
+  db_data-prod:

@@ -1,9 +1,10 @@
 # Makefile para gerenciar migrations do Flask
 
-SERVICE=web
-DB_SERVICE=mysql
-DB_USER=ribeiro
-DB_NAME=db
+SERVICE=web-dev
+DB_SERVICE=mysql-dev
+DB_USER=devuser
+DB_PASS=devpass
+DB_NAME=devdb
 
 # Cria a pasta migrations (apenas na primeira vez)
 init:
@@ -23,20 +24,20 @@ downgrade:
 
 # Atalho para abrir shell dentro do contêiner
 shell:
-	docker compose exec $(SERVICE) bash
+	docker compose exec $(env) bash
 
 # Atalho para compose --profile dev
-dev-up:
+devup:
 	docker compose --profile dev up
-dev-down:
+devdown:
 	docker compose --profile dev down
 
 # Atalho para compose --profile prod
-prod-up:
+produp:
 	docker compose --profile prod up
-prod-down:
+proddown:
 	docker compose --profile prod down
 
 # Abre cliente MySQL direto no contêiner do banco
-db-shell:
-	docker compose exec $(DB_SERVICE) mysql -u $(DB_USER) -p$(DB_USER) $(DB_NAME)
+dbshell:
+	docker compose exec $(DB_SERVICE) mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
