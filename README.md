@@ -45,8 +45,15 @@ Exemplo de variáveis:
 
 ```env
 FLASK_ENV=development
-DATABASE_URL=mysql+pymysql://user:password@mysql-dev:3306/db_name
-SECRET_KEY=uma_chave_segura
+FLASK_RUN_HOST=0.0.0.0
+FLASK_RUN_PORT=5000
+
+DB_CONTAINER=mysql-dev
+DB_PORT=3306
+MYSQL_ROOT_PASSWORD=ruser
+MYSQL_DATABASE=db
+MYSQL_USER=user
+MYSQL_PASSWORD=pass
 ```
 
 ### Arquivo `secrets.toml`
@@ -55,8 +62,8 @@ Armazena segredos e chaves sensíveis (não versionado).
 Exemplo:
 
 ```toml
-[auth]
-jwt_secret = "chave_super_secreta"
+[default]
+SECRET_KEY=uma_chave_segura
 ```
 
 👉 **Importante**: nunca versionar `.env.*` nem `secrets.toml`. Adicione-os ao `.gitignore`.
@@ -72,7 +79,7 @@ docker compose --profile dev up --build
 ```
 
 - Flask acessível em `http://localhost:5001`  
-- MySQL acessível em `localhost:3307` (se exposto)
+- MySQL acessível apenas internamente (não exposto)
 
 ### Ambiente de Produção
 
@@ -155,16 +162,8 @@ docker compose run --rm web-dev pytest
 
 ---
 
-## 📌 Próximos passos
-
-- Configurar **CI/CD** (GitHub Actions, GitLab CI).  
-- Adicionar **monitoramento/logs** (Prometheus, Grafana).  
-- Substituir certificados autoassinados por **Let’s Encrypt** em produção.  
-
----
-
 ## 📄 Licença
 
-Este projeto está licenciado sob a `[Looks like the result wasn't safe to show. Let's switch things up and try something else!]`.
+Este projeto está licenciado sob a *MIT License*.
 
 ---
