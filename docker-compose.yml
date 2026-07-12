@@ -20,8 +20,6 @@ services:
       - .env.dev
     volumes:
       - db_data-dev:/var/lib/mysql
-    ports:
-      - "3307:3306"
     profiles: ["dev"]
 
   web-prod:
@@ -31,8 +29,6 @@ services:
       - .:/app
     env_file:
       - .env.prod
-    ports:
-      - "5002:5000"
     profiles: ["prod"]
     depends_on:
       - mysql-prod
@@ -44,8 +40,20 @@ services:
       - .env.prod
     volumes:
       - db_data-prod:/var/lib/mysql
+    profiles: ["prod"]
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx_prod
     ports:
-      - "3308:3306"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - web-prod
     profiles: ["prod"]
   
 volumes:

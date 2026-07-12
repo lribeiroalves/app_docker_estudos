@@ -4,8 +4,8 @@ import os
 
 
 def create_app():
-    template_dir = os.path.abspath('app/blueprints/_templates')
-    static_dir = os.path.abspath('app/blueprints/_static')
+    template_dir = os.path.abspath('app/templates')
+    static_dir = os.path.abspath('app/static')
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
     configuration.init_app(app)
 

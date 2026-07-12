@@ -223,3 +223,5 @@ secrets.toml
 .env.dev
 **/.env.prod
 .env.prod
+nginx/certs/
+nginx/logs/

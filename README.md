@@ -150,6 +150,68 @@ docker compose run --rm web-dev pytest
 
 ---
 
+## 📑 Gerenciamento de Logs (logrotate)
+
+Este projeto utiliza **logrotate** para controlar o crescimento dos arquivos de log do Nginx.
+
+### Configuração
+
+O arquivo de configuração está em `/etc/logrotate.d/nginx` e define:
+
+- Rotação **diária** (`daily`)
+- Manutenção de até **14 arquivos antigos** (`rotate 14`)
+- Compressão dos arquivos antigos (`compress`, `delaycompress`)
+- Criação automática de novos arquivos com permissões seguras (`create 0640 root root`)
+- Reabertura dos arquivos de log pelo Nginx após cada rotação (`postrotate` com `nginx -s reopen`)
+
+```text
+/caminho_completo/.../app_docker_estudos/nginx/logs/*.log {
+    daily
+    size 1k
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 root root
+    sharedscripts
+    postrotate
+        docker exec nginx_prod nginx -s reopen
+    endscript
+}
+```
+
+### Pré-requisitos
+
+- A pasta de logs (`./nginx/logs`) deve ter permissões seguras:
+
+  ```bash
+  sudo chown root:root ./nginx/logs
+  sudo chmod 755 ./nginx/logs
+  ```
+
+### Testando manualmente
+
+Para forçar a rotação e validar:
+
+```bash
+sudo logrotate -f /etc/logrotate.d/nginx
+ls -lh ./nginx/logs
+```
+
+Você deve ver arquivos como:
+
+```text
+access.log
+access.log.1
+error.log
+error.log.1
+```
+
+E, se compressão estiver habilitada, versões antigas como `.gz`.
+
+---
+
 ## 📦 Boas práticas adotadas
 
 - **Separação de ambientes** (`dev` e `prod`) com perfis Docker Compose.  
